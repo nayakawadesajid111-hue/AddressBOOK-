@@ -1,3 +1,4 @@
+/*File "contact.c" contains all definitions of functions*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,7 +6,12 @@
 #include "contact.h"
 #include "file.h"
 
-/*Function definition  for listing contact*/
+/*Function definition for listing contact
+ *Fuction list contact
+ * Usages buffer sort for sorting strings
+ * structure is passed(pass ref)
+ * return type is void. 
+ */
 void listContacts(AddressBook *addressBook)
 {
   dash();
@@ -18,7 +24,7 @@ void listContacts(AddressBook *addressBook)
     printf("%-20s\t%-20s\t%-35s\n", addressBook->contacts[i].name, addressBook->contacts[i].phone, addressBook->contacts[i].email);
   }
   dash();
-// sorted option 
+  // sorted option
   char chr;
   printf("Do you want sort list (y/n): ");
   scanf(" %c", &chr);
@@ -26,74 +32,98 @@ void listContacts(AddressBook *addressBook)
 
   if (chr == 'y' || chr == 'Y')
   {
-    int choice;
-    printf("1. Sort names (from A to Z)\n2. Sort phone numbers (from 0 to 9)\n3. Sort Emails(from a to z)\n");
+    char temp[50];
+    int choice1;
+    printf("1. Sort by name.\n2. Sort by phone number\n3. Sort by email\n");
+    printf("Enter the choice: ");
+    scanf("%d",&choice1);
     dash();
-    printf("Enter choice : ");
-    scanf("%d", &choice);
-    switch (choice)
+    switch (choice1)
     {
     case 1:
-      int ch;
-      dash();
-      printf("%40s\n", "List of contact");
-      dash();
-      printf("%-10s%25s%25s\n", "NAME", "PHONE NUMBER", "EMAIL");
-      dash();
-      for (ch = 'A'; ch <= 'Z'; ch++)
+      for (int i = 0; i < addressBook->contactCount - 1; i++)
       {
-        for (int i = 0; i < addressBook->contactCount; i++)
+        for (int j = 0; j < addressBook->contactCount - i - 1; j++)
         {
-
-          if (addressBook->contacts[i].name[0] == ch)
+          if (strcmp(addressBook->contacts[j].name, addressBook->contacts[j + 1].name) > 0)
           {
-            printf("%-20s\t%-20s\t%-35s\n", addressBook->contacts[i].name, addressBook->contacts[i].phone, addressBook->contacts[i].email);
+            strcpy(temp, addressBook->contacts[j].name);
+            strcpy(addressBook->contacts[j].name, addressBook->contacts[j + 1].name);
+            strcpy(addressBook->contacts[j + 1].name, temp);
+            strcpy(temp, addressBook->contacts[j].phone);
+            strcpy(addressBook->contacts[j].phone, addressBook->contacts[j + 1].phone);
+            strcpy(addressBook->contacts[j + 1].phone, temp);
+            strcpy(temp, addressBook->contacts[j].email);
+            strcpy(addressBook->contacts[j].email, addressBook->contacts[j + 1].email);
+            strcpy(addressBook->contacts[j + 1].email, temp);
           }
         }
       }
-
+      printf("%-10s%25s%25s\n", "NAME", "PHONE NUMBER", "EMAIL");
+      dash();
+      for (int i = 0; i < addressBook->contactCount; i++)
+      {
+        printf("%-20s\t%-20s\t%-35s\n", addressBook->contacts[i].name, addressBook->contacts[i].phone, addressBook->contacts[i].email);
+      }
       break;
     case 2:
-      dash();
-      printf("%40s\n", "List of contact");
-      dash();
-      printf("%-10s%25s%25s\n", "NAME", "PHONE NUMBER", "EMAIL");
-      dash();
-      for (ch = '0'; ch <= '9'; ch++)
+      for (int i = 0; i < addressBook->contactCount - 1; i++)
       {
-        for (int i = 0; i < addressBook->contactCount; i++)
+        for (int j = 0; j < addressBook->contactCount - i - 1; j++)
         {
-
-          if (addressBook->contacts[i].phone[0] == ch)
+          if (strcmp(addressBook->contacts[j].phone, addressBook->contacts[j + 1].phone) > 0)
           {
-            printf("%-20s\t%-20s\t%-35s\n", addressBook->contacts[i].name, addressBook->contacts[i].phone, addressBook->contacts[i].email);
+            strcpy(temp, addressBook->contacts[j].phone);
+            strcpy(addressBook->contacts[j].phone, addressBook->contacts[j + 1].phone);
+            strcpy(addressBook->contacts[j + 1].phone, temp);
+
+            strcpy(temp, addressBook->contacts[j].name);
+            strcpy(addressBook->contacts[j].name, addressBook->contacts[j + 1].name);
+            strcpy(addressBook->contacts[j + 1].name, temp);
+
+            strcpy(temp, addressBook->contacts[j].email);
+            strcpy(addressBook->contacts[j].email, addressBook->contacts[j + 1].email);
+            strcpy(addressBook->contacts[j + 1].email, temp);
           }
         }
       }
-
+      printf("%-10s%25s%25s\n", "NAME", "PHONE NUMBER", "EMAIL");
+      dash();
+      for (int i = 0; i < addressBook->contactCount; i++)
+      {
+        printf("%-20s\t%-20s\t%-35s\n", addressBook->contacts[i].name, addressBook->contacts[i].phone, addressBook->contacts[i].email);
+      }
       break;
     case 3:
-      dash();
-      printf("%40s\n", "List of contact");
-      dash();
-      printf("%-10s%25s%25s\n", "NAME", "PHONE NUMBER", "EMAIL");
-      dash();
-      for (ch = 'a'; ch <= 'z'; ch++)
+      for (int i = 0; i < addressBook->contactCount - 1; i++)
       {
-        for (int i = 0; i < addressBook->contactCount; i++)
+        for (int j = 0; j < addressBook->contactCount - i - 1; j++)
         {
-
-          if (addressBook->contacts[i].email[0] == ch)
+          if (strcmp(addressBook->contacts[j].email, addressBook->contacts[j + 1].email) > 0)
           {
-            printf("%-20s\t%-20s\t%-35s\n", addressBook->contacts[i].name, addressBook->contacts[i].phone, addressBook->contacts[i].email);
+            strcpy(temp, addressBook->contacts[j].email);
+            strcpy(addressBook->contacts[j].email, addressBook->contacts[j + 1].email);
+            strcpy(addressBook->contacts[j + 1].email, temp);
+
+            strcpy(temp, addressBook->contacts[j].name);
+            strcpy(addressBook->contacts[j].name, addressBook->contacts[j + 1].name);
+            strcpy(addressBook->contacts[j + 1].name, temp);
+
+            strcpy(temp, addressBook->contacts[j].phone);
+            strcpy(addressBook->contacts[j].phone, addressBook->contacts[j + 1].phone);
+            strcpy(addressBook->contacts[j + 1].phone, temp);
           }
         }
       }
+      printf("%-10s%25s%25s\n", "NAME", "PHONE NUMBER", "EMAIL");
+      dash();
+      for (int i = 0; i < addressBook->contactCount; i++)
+      {
+        printf("%-20s\t%-20s\t%-35s\n", addressBook->contacts[i].name, addressBook->contacts[i].phone, addressBook->contacts[i].email);
+      }
       break;
-
     default:
       printf("Invalid choice\n");
-      break;
     }
   }
   else
@@ -142,7 +172,11 @@ int emailcheck(char email[], AddressBook *AddressBook)
   return 0;
 }
 
-/*Function def for creating new contact*/
+/*Function def for creating new contact
+ *1.Creates new contact :
+ *                    -> void return type
+ *                    -> structure is passed(pass by ref) 
+ */
 void createContact(AddressBook *addressBook)
 {
   int res = 0;
@@ -209,7 +243,11 @@ void createContact(AddressBook *addressBook)
   (addressBook->contactCount)++;
 }
 
-/*Function def searching contact*/
+/*Function def searching contact
+ * Fuction search contact and displays matching string
+ * 1->structure is passed (pass by ref)
+ * 2->return type is void
+ */
 void searchContact(AddressBook *addressBook)
 {
   char namesearch[25];
@@ -238,7 +276,7 @@ void searchContact(AddressBook *addressBook)
       if (strcmp(namesearch, addressBook->contacts[i].name) == 0)
       {
         flag = 1;
-        printf("\t\t%s %s %s\n", addressBook->contacts[i].name, addressBook->contacts[i].phone, addressBook->contacts[i].email);
+        printf("\t%s %s %s\n", addressBook->contacts[i].name, addressBook->contacts[i].phone, addressBook->contacts[i].email);
         count++;
       }
     }
@@ -265,7 +303,7 @@ void searchContact(AddressBook *addressBook)
     if (flag == 0)
     {
       count = 0;
-      printf("\t\t...Phone number not found in the Addressbook...\n");
+      printf("\t...Phone number not found in the Addressbook...\n");
     }
     break;
 
@@ -290,7 +328,11 @@ void searchContact(AddressBook *addressBook)
     break;
   }
 }
-/*Function def for edit contact*/
+/*Function def for edit contact
+ * Edits Existing contact:
+ *                         1-> structure is passed (pass ref)
+ *                         2-> return type is void
+ */
 void editContact(AddressBook *addressBook)
 {
   char namesearch[25];
@@ -357,7 +399,7 @@ void editContact(AddressBook *addressBook)
         {
           printf("Enter new phone number : ");
           scanf(" %19[^\n]", newphone);
-          //checking valid number
+          // checking valid number
           int len = strlen(newphone);
           if (len != 10)
           {
@@ -748,7 +790,9 @@ void editContact(AddressBook *addressBook)
     break;
   }
 }
-/*function for deleting  contact*/
+
+                
+/*sub function for deleting  contact*/
 /*Name delete*/
 void deletenamestr(AddressBook *addressBook, char deletestr[], int index)
 {
@@ -830,7 +874,13 @@ void deleteemailstr(AddressBook *addressBook, char deletestr[], int index)
     i++;
   }
 }
-/*Function definition of delete contact*/
+
+/*Function definition of delete contact
+ * Deletes contact from addressbook:
+ *     1-> structure is passed (pass by ref)
+ *     2-> return type void
+ */
+
 void deleteContact(AddressBook *addressBook)
 {
   char namesearch[25];
@@ -1095,6 +1145,7 @@ void deleteContact(AddressBook *addressBook)
     break;
   }
 }
+/*Prints 69 '-' Dash */
 void dash()
 {
   int i = 1;

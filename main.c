@@ -4,12 +4,15 @@
 int main()
 {
     int choice;
-    AddressBook addressBook;
+    
+    AddressBook addressBook;  //declaration of nested structure 
     initialize(&addressBook); // Initialize the address book
 
     do
     {  
-        /*Menu diaplay*/
+        /*Menu diaplay
+         *Switch used to work according user choice.
+         */
         dash();
         printf("%37s\n", "WELCOME");
         dash();
@@ -31,7 +34,6 @@ int main()
             dash();
             //function call
             createContact(&addressBook);
-            saveContactsToFile(&addressBook);
             dash();
             printf("%48s\n", "Successfully created contact...");
             dash();
@@ -53,7 +55,6 @@ int main()
             dash();
             //function call
             editContact(&addressBook);
-            saveContactsToFile(&addressBook);
             dash();
             printf("%45s\n", "...Returning main menu...");
             dash();
@@ -65,7 +66,6 @@ int main()
             dash();
             //function call
             deleteContact(&addressBook);
-            saveContactsToFile(&addressBook);
             dash();
             printf("%45s\n", "...Returning main menu...");
             dash();
